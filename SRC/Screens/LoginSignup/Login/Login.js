@@ -8,7 +8,7 @@ const Login = ({ navigation }) => {
   return (
     <View style={containerFull}>
       <Image source={logo} style={logoImg}/>
-      <Text style={formHead}>Login</Text>
+      <Text style={formHead}>Login GeekChat App</Text>
       <TextInput placeholder="Enter your Email" style={formInput}/>
       <TextInput placeholder="Enter your Password" secureTextEntry={true} style={formInput}/>
       <Text onPress={() => {navigation.navigate('ForgotPassword_EnterEmail')}} style={formTextLinkRight}>Forgot password?</Text>
