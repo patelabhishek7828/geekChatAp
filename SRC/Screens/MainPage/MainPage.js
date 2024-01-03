@@ -10,8 +10,8 @@ const MainPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar />
-      <TopNavBar />
-      <FollowersRandomPost />
+      <TopNavBar navigation={navigation} />
+      <FollowersRandomPost navigation={navigation} />
       <Bottomnavbar />
     </View>
   )

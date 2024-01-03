@@ -10,7 +10,6 @@ const PostsCards = (props) => {
   const [isLiked, setIsLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);
 
-  console.log("jjjj", item.profilepic)
   return (
     <View style={styles.container}>
       <View style={styles.cont1}>
