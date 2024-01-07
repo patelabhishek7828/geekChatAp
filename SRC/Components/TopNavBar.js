@@ -11,6 +11,9 @@ const TopNavBar = ({ navigation, page }) => {
       {
         page === 'MainPage' && <Ionicons name="chatbubbles" size={24} right={10} style={icons1} onPress={()=>{ navigation.navigate('All_Chats')}}/>
       }    
+      {
+        page === 'My_UserProfile' && <Ionicons name="settings-sharp" size={24} right={10} style={icons1} onPress={()=>{ navigation.navigate('Settings1')}}/>
+      }
     </View>
   )
 }

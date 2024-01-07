@@ -17,6 +17,7 @@ import All_Chats from './SRC/Screens/ChatSection/All_Chats';
 import SearchuserPage from './SRC/Screens/MainPage/SearchuserPage';
 import NotificationPage from './SRC/Screens/MainPage/NotificationPage';
 import My_UserProfile from './SRC/Screens/Profile/My_UserProfile';
+import Settings1 from './SRC/Screens/Settings/Settings1';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +52,7 @@ export default function App() {
         <Stack.Screen name="SearchuserPage" component={SearchuserPage} options={{animation: 'slide_from_bottom'}}/>
         <Stack.Screen name="NotificationPage" component={NotificationPage} options={{animation: 'slide_from_left'}}/>
         <Stack.Screen name="My_UserProfile" component={My_UserProfile} options={{animation: 'slide_from_left'}}/>
+        <Stack.Screen name="Settings1" component={Settings1} options={{animation: 'slide_from_left'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
