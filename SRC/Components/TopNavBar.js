@@ -4,11 +4,13 @@ import { icons1, logoImg2, row } from '../CommonCss/pagecss'
 import logo from '../../assets/logo.png'
 import { Ionicons } from '@expo/vector-icons';
 
-const TopNavBar = ({ navigation }) => {
+const TopNavBar = ({ navigation, page }) => {
   return (
     <View style={styles.container}>
       <Image source={logo} style={logoImg2}/>
-      <Ionicons name="chatbubbles" size={24} right={10} style={icons1} onPress={()=>{ navigation.navigate('All_Chats')}}/>    
+      {
+        page === 'MainPage' && <Ionicons name="chatbubbles" size={24} right={10} style={icons1} onPress={()=>{ navigation.navigate('All_Chats')}}/>
+      }    
     </View>
   )
 }

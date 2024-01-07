@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import { formHead2 } from '../../CommonCss/formCss';
 import ChatCards from '../../Cards/ChatCards';
+import { srchBar } from '../../CommonCss/pagecss';
 
 const All_Chats = ({ navigation }) => {
     let chats = [
@@ -38,7 +39,7 @@ const All_Chats = ({ navigation }) => {
         <Ionicons name="arrow-back-circle" size={24} style={styles.goHomeIcon} onPress={()=>{navigation.navigate('MainPage')}} />
         <View style={styles.c1}>
             <Text style={formHead2}>Your Chats</Text>
-            <TextInput onChangeText={(text) => { setKeyWords(text) }} style={styles.srchBar} placeholder='Enter Search'/>
+            <TextInput onChangeText={(text) => { setKeyWords(text) }} style={srchBar} placeholder='Enter Search'/>
         </View>
         <View style={styles.c2}>
             {
@@ -78,14 +79,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 25,
         backgroundColor:'#333333'
-    },
-    srchBar:{
-        width:'90%',
-        backgroundColor: "#fff",
-        borderRadius: 25,
-        padding: 10,
-        marginTop: 15,
-        fontSize:18,
     },
     c2: {
         width: '100%',

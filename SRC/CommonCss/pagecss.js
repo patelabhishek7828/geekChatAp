@@ -38,4 +38,13 @@ module.exports = {
         fontSize: 30,
         color:'white'
     },
+    srchBar:{
+        width:'90%',
+        backgroundColor: "#fff",
+        borderRadius: 25,
+        padding: 10,
+        marginTop: 15,
+        fontSize:18,
+        alignSelf:'center',
+    },
 }
