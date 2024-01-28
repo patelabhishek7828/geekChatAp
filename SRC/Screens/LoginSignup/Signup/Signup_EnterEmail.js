@@ -23,7 +23,7 @@ const Signup_EnterEmail = ({ navigation }) => {
       alert('please enter email');
     } else {
     setLoading(true);
-    fetch('http://192.168.1.108:3000/verify', {
+    fetch('http://192.168.198.179:3000/verify', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

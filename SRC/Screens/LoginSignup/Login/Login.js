@@ -17,6 +17,7 @@ import {
 } from "../../../CommonCss/formCss";
 import logo from "../../../../assets/logo.png";
 import { containerFull, hr80, logoImg } from "../../../CommonCss/pagecss";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -28,19 +29,20 @@ const Login = ({ navigation }) => {
       alert("Please Enter Email and Password")
     } else {
       setLoading(true);
-      fetch('http://192.168.1.108:3000/signin', {
+      fetch('http://192.168.198.179:3000/signin', {
         method: 'post',
         headers : {
           'Content-Type' : 'application/json'
         },
         body: JSON.stringify({email: email, password: password})
-      }).then(res => res.json()).then(data => {
+      }).then(res => res.json()).then(async(data) => {
         if(data.error){
           setLoading(false);
           alert(data.error)
         }else if(data.message == 'Succesfully Sign In') {
           setLoading(false);
           // console.log(data)
+          await AsyncStorage.setItem('user', JSON.stringify(data));
           navigation.navigate('MainPage', { data } )
         }
         // console.log("sdhdj", data)
