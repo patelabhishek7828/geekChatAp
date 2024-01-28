@@ -11,10 +11,11 @@ const My_UserProfile = ({ navigation }) => {
   useEffect(() => {
     AsyncStorage.getItem("user")
       .then(async(value) => {
-        fetch('http://192.168.198.179:3000/userdata', {
+        fetch('http://192.168.1.108:3000/userdata', {
           method: 'post',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + JSON.parse(value).token
           },
           body:JSON.stringify({ email : JSON.parse(value).user.email })
         }).then(res => res.json()).then(async(data) => {
@@ -22,7 +23,7 @@ const My_UserProfile = ({ navigation }) => {
           if(data.message === 'User Found'){
             setUserData(data.user);
           } else {
-            alert('Something went wrong');
+            alert('Login Again');
             navigation.navigate('Login')
           }
         }).catch(err => {

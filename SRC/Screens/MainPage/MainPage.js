@@ -11,7 +11,9 @@ const MainPage = ({ navigation, route }) => {
   // console.log(object)
   // const {data} = route.params
   // console.log('uuuuuuuser', data.user.username)
+
   const [userData, setUserData] = useState(null);
+  
   useEffect(() => {
     AsyncStorage.getItem("user")
       .then((data) => {
