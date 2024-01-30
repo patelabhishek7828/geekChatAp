@@ -22,14 +22,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
     const [confirmNewPassword, setconfirmNewPassword] = useState('');
   
     const handlePasswordChange = () => {
-        if(!oldPassword || !newPassword || !confirmNewPassword){
+        if(oldPassword ==='' || newPassword ==='' || confirmNewPassword ===''){
             alert("please fill all the fields");
         } else if (newPassword != confirmNewPassword){
             alert("New Password and confirm new password must be same");
         } else {
             setLoading(true);
             AsyncStorage.getItem('user').then(value => {
-                fetch('192.168.1.108:3000/changePassword', {
+              console.log("val", value)
+                fetch('http://192.168.1.108:3000/changePassword', {
                     method:'post',
                     headers: {
                         'Content-Type': 'application/json'
@@ -46,7 +47,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
                         setLoading(false);
                     }
                 })
-            })//49 async
+            })
         }
     }
     

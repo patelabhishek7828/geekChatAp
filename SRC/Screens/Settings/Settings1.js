@@ -15,11 +15,15 @@ const Settings1 = ({ navigation }) => {
   const handleChangePassword = () => {
       navigation.navigate('ChangePassword')
   }
+
+  const handleEditProfile = () => {
+      navigation.navigate('EditProfile')
+  }
   return (
     <View style={styles.container}>
       <Ionicons name="arrow-back-circle" size={24} style={styles.goHomeIcon} onPress={()=>{navigation.navigate('My_UserProfile')}} />
       <Text style={formHead}>Settings1</Text>
-      <Text style={styles.txt1}>Edit Profile</Text>
+      <Text style={styles.txt1} onPress={()=> handleEditProfile()}>Edit Profile</Text>
       <Text style={styles.txt1} onPress={()=> handleChangePassword()}>Change password</Text>
       <Text style={styles.txt1}>Customer support</Text>
       <Text style={styles.txt1} onPress={()=> handleLogout() }>Logout</Text>
