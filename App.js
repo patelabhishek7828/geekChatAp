@@ -20,6 +20,8 @@ import My_UserProfile from './SRC/Screens/Profile/My_UserProfile';
 import Settings1 from './SRC/Screens/Settings/Settings1';
 import ChangePassword from './SRC/Screens/Settings/ChangePassword';
 import EditProfile from './SRC/Screens/Settings/EditProfile';
+import ChangeUsername from './SRC/Screens/Settings/ChangeUsername';
+import ChangeDescription from './SRC/Screens/Settings/ChangeDescription';
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +59,8 @@ export default function App() {
         <Stack.Screen name="Settings1" component={Settings1} options={{animation: 'slide_from_left'}}/>
         <Stack.Screen name="ChangePassword" component={ChangePassword} options={{animation: 'slide_from_left'}}/>
         <Stack.Screen name="EditProfile" component={EditProfile} options={{animation: 'slide_from_left'}}/>
+        <Stack.Screen name="ChangeUsername" component={ChangeUsername} options={{animation: 'slide_from_left'}}/>
+        <Stack.Screen name="ChangeDescription" component={ChangeDescription} options={{animation: 'slide_from_left'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

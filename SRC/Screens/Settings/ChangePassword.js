@@ -55,12 +55,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
       <View style={containerFull}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Settings_1");
+            navigation.navigate("Settings1");
           }}
           style={goback}
         >
           <Ionicons name="arrow-back" size={24} color="white" />
-          <Text style={{ color: "gray", fontWeight: "bold", fontSize: 16 }}>
+          <Text style={{ color: "gray", fontWeight: "bold", fontSize: 16 }} >
             Go Back
           </Text>
         </TouchableOpacity>

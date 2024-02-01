@@ -11,8 +11,8 @@ const EditProfile = ({ navigation }) => {
       <Ionicons name="arrow-back-circle" size={24} style={styles.goHomeIcon} onPress={()=>{navigation.navigate('Settings1')}} />
       <Text style={formHead}>Edit Profile</Text>
       <Text style={styles.txt1}>Change Profile Picture </Text>
-      <Text style={styles.txt1}>Change username</Text>
-      <Text style={styles.txt1}>Change Description</Text>
+      <Text style={styles.txt1} onPress={() => navigation.navigate('ChangeUsername')}>Change Username</Text>
+      <Text style={styles.txt1} onPress={() => navigation.navigate('ChangeDescription')}>Change Description</Text>
     </View>
   )
 }
