@@ -5,10 +5,12 @@ import Bottomnavbar from '../../Components/Bottomnavbar'
 import TopNavBar from '../../Components/TopNavBar'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import nopic from '../../../assets/nopic.png';
+import { Ionicons } from '@expo/vector-icons';
 
 const My_UserProfile = ({ navigation }) => {
   const [userData, setUserData] = useState(null);
-  useEffect(() => {
+
+  const loadData =() => {
     AsyncStorage.getItem("user")
       .then(async(value) => {
         fetch('http://192.168.1.108:3000/userdata', {
@@ -34,6 +36,9 @@ const My_UserProfile = ({ navigation }) => {
       .catch((err) => {
         alert(err);
       });
+  }
+  useEffect(() => {
+    loadData();
   }, []);
 
   return (
@@ -41,12 +46,15 @@ const My_UserProfile = ({ navigation }) => {
       <StatusBar />
       <TopNavBar navigation={navigation} page={"My_UserProfile"}/>
       <Bottomnavbar navigation={navigation} page={"My_UserProfile"}/>
+      <Ionicons name="reload" size={24} color="white" style={styles.refresh} onPress={()=> loadData() }/>
+      {console.log("userData", userData)}
+
       {
         userData ? 
         <ScrollView>
         <View style={styles.c1}>
           {
-            userData.profilepic.length > 0 ? <Image style={styles.profilePic} source={{ uri: userData.profile_image }} />
+            userData.profilepic.length > 0 ? <Image style={styles.profilePic} source={{ uri: userData.profilepic }} />
             : <Image style={styles.profilePic} source={nopic} />
           }
           <Text style={styles.txt}>@{userData.username}</Text>
@@ -57,7 +65,7 @@ const My_UserProfile = ({ navigation }) => {
               <Text style={styles.txt2}>{userData.followers.length}</Text>
             </View>
             <View style={styles.vr1}></View>
-
+ 
             <View style={styles.c111}>
               <Text style={styles.txt1}>Following</Text>
               <Text style={styles.txt2}>{userData.following.length}</Text>
@@ -261,6 +269,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       height: 200
+    },
+    refresh: {
+      position:'absolute',
+      top:60,
+      right:25,
     }
   })
 
