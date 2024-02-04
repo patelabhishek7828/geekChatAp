@@ -11,6 +11,7 @@ const My_UserProfile = ({ navigation }) => {
   const [userData, setUserData] = useState(null);
 
   const loadData =() => {
+    console.log("11")
     AsyncStorage.getItem("user")
       .then(async(value) => {
         fetch('http://192.168.1.108:3000/userdata', {
@@ -21,7 +22,6 @@ const My_UserProfile = ({ navigation }) => {
           },
           body:JSON.stringify({ email : JSON.parse(value).user.email })
         }).then(res => res.json()).then(async(data) => {
-          console.log("dattttttaaaa", data)
           if(data.message === 'User Found'){
             setUserData(data.user);
           } else {
@@ -46,8 +46,7 @@ const My_UserProfile = ({ navigation }) => {
       <StatusBar />
       <TopNavBar navigation={navigation} page={"My_UserProfile"}/>
       <Bottomnavbar navigation={navigation} page={"My_UserProfile"}/>
-      <Ionicons name="reload" size={24} color="white" style={styles.refresh} onPress={()=> loadData() }/>
-      {console.log("userData", userData)}
+      <Ionicons name="reload" size={24} color="white" style={styles.refresh} onPress={() => {loadData()}}/>
 
       {
         userData ? 
@@ -88,10 +87,11 @@ const My_UserProfile = ({ navigation }) => {
           <Text style={styles.txt}>Your Posts</Text>
           <View style={styles.c13}>
             {
-              data.posts.map((item) => {
+              userData?.posts?.map((item) => {
+                console.log("item", item)
                 return(
-                  <View style={styles.postPic} key={item.id}>
-                    <Image source={{ uri: item.post_image }} style={styles.postPic} />
+                  <View style={styles.postPic} key={item.post}>
+                    <Image source={{ uri: item.post }} style={styles.postPic} />
                   </View>
                 )
               })
