@@ -14,7 +14,7 @@ const My_UserProfile = ({ navigation }) => {
     console.log("11")
     AsyncStorage.getItem("user")
       .then(async(value) => {
-        fetch('http://192.168.1.108:3000/userdata', {
+        fetch('http://192.168.1.107:3000/userdata', {
           method: 'post',
           headers: {
             'Content-Type': 'application/json',

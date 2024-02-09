@@ -29,13 +29,14 @@ const Login = ({ navigation }) => {
       alert("Please Enter Email and Password")
     } else {
       setLoading(true);
-      fetch('http://192.168.1.108:3000/signin', {
+      fetch('http://192.168.1.107:3000/signin', {
         method: 'post',
         headers : {
           'Content-Type' : 'application/json'
         },
         body: JSON.stringify({email: email, password: password})
       }).then(res => res.json()).then(async(data) => {
+        console.log("sss",data)
         if(data.error){
           setLoading(false);
           alert(data.error)
