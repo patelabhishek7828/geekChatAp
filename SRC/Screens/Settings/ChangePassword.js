@@ -30,7 +30,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
             setLoading(true);
             AsyncStorage.getItem('user').then(value => {
               console.log("val", value)
-                fetch('http://192.168.1.107:3000/changePassword', {
+                fetch('http://192.168.1.106:3000/changePassword', {
                     method:'post',
                     headers: {
                         'Content-Type': 'application/json'

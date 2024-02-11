@@ -15,7 +15,7 @@ import UserCard from '../../Cards/UserCard'
 //   const getAllUsers = () => {
 //     if(keyword.length > 0){
 //       setLoading(true);
-//       fetch('http://192.168.1.107:3000/searchuser', {
+//       fetch('http://192.168.1.106:3000/searchuser', {
 //         method: 'post',
 //         headers: {
 //           'Content-Type': 'application/json'
@@ -154,7 +154,7 @@ const SearchuserPage = ({ navigation }) => {
   const getAllUsers = () => {
     if (keyword.length > 0) {
       setLoading(true);
-      fetch('http://192.168.1.107:3000/searchuser', {
+      fetch('http://192.168.1.106:3000/searchuser', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'
@@ -166,13 +166,17 @@ const SearchuserPage = ({ navigation }) => {
           setError(data.error);
         } else if (data.message === 'User Found') {
           setError(null);
-          setData(data.user); // Assuming your response has a 'data' field
+          setData(data.users); // Assuming your response has a 'data' field
+          setLoading(false);
         }
         setLoading(false);
       }).catch(err => {
         setError('Error fetching data');
         setLoading(false);
       })
+    } else {
+      setData([]);
+      setError(null);
     }
   }
 
@@ -195,7 +199,7 @@ const SearchuserPage = ({ navigation }) => {
                 <ScrollView style={styles.userListScroll}>
                   {
                     data.map((item, index) => (
-                      <UserCard key={item.username} user={item} />
+                      <UserCard key={item.username} user={item} navigation={navigation}/>
                     ))
                   }
                 </ScrollView>

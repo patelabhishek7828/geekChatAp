@@ -7,35 +7,30 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import nopic from '../../../assets/nopic.png';
 import { Ionicons } from '@expo/vector-icons';
 
-const My_UserProfile = ({ navigation }) => {
+const Other_UserProfile = ({ navigation, route }) => {
+  
   const [userData, setUserData] = useState(null);
+  const { user } = route.params
+  console.log("llll", user)
 
   const loadData =() => {
-    console.log("11")
-    AsyncStorage.getItem("user")
-      .then(async(value) => {
-        fetch('http://192.168.1.106:3000/userdata', {
-          method: 'post',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + JSON.parse(value).token
-          },
-          body:JSON.stringify({ email : JSON.parse(value).user.email })
-        }).then(res => res.json()).then(async(data) => {
-          if(data.message === 'User Found'){
-            setUserData(data.user);
-          } else {
-            alert('Login Again');
-            navigation.navigate('Login')
-          }
-        }).catch(err => {
-          alert(err)
-          navigation.navigate('Login')
-        })
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    fetch('http://192.168.1.106:3000/differentuserdata', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email : user.email })
+    }).then(res => res.json()).then(data => {
+      if(data.message == 'User Found'){
+        setUserData(data.user)
+      }else {
+        alert('User Not Found');
+        navigation.navigate('SearchuserPage')
+      }
+    }).catch(err =>{
+      alert("Something Went Wrong")
+      navigation.navigate('SearchuserPage')
+    })
   }
   useEffect(() => {
     loadData();
@@ -44,8 +39,8 @@ const My_UserProfile = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar />
-      <TopNavBar navigation={navigation} page={"My_UserProfile"}/>
-      <Bottomnavbar navigation={navigation} page={"My_UserProfile"}/>
+      <TopNavBar navigation={navigation} page={"Other_UserProfile"}/>
+      <Bottomnavbar navigation={navigation} page={"SearchuserPage"}/>
       <Ionicons name="reload" size={24} color="white" style={styles.refresh} onPress={() => {loadData()}}/>
 
       {
@@ -57,7 +52,10 @@ const My_UserProfile = ({ navigation }) => {
             : <Image style={styles.profilePic} source={nopic} />
           }
           <Text style={styles.txt}>@{userData.username}</Text>
-
+          <View style={styles.row}>
+              <Text style={styles.follow}>Follow</Text>
+              <Text style={styles.message}>Message</Text>
+          </View>
           <View style={styles.c11}>
             <View style={styles.c111}>
               <Text style={styles.txt1}>Followers</Text>
@@ -108,94 +106,6 @@ const My_UserProfile = ({ navigation }) => {
     </View>
   )
 }
-
-  // const data = {
-  //   username: "abhishek7828",
-  //   followers: 1000,
-  //   following: 1500,
-  //   description: "I am software developer and I love to code.",
-  //   profile_image: "https://picsum.photos/500/500",
-  //   posts: [
-  //     {
-  //       id: 1,
-  //       post_image: "https://picsum.photos/400/400",
-  //     },
-  //     {
-  //       id: 2,
-  //       post_image: "https://picsum.photos/300/300",
-  //     },
-  //     {
-  //       id: 3,
-  //       post_image: "https://picsum.photos/200/200",
-  //     },
-  //     {
-  //       id: 4,
-  //       post_image: "https://picsum.photos/250/250",
-  //     },
-  //     {
-  //       id: 5,
-  //       post_image: "https://picsum.photos/550/550",
-  //     },
-  //     {
-  //       id: 6,
-  //       post_image: "https://picsum.photos/350/350",
-  //     },
-  //     {
-  //       id: 7,
-  //       post_image: "https://picsum.photos/450/450",
-  //     },
-  //   ]
-  // }
-    // return (
-    //     <View style={styles.container}>
-    //       <StatusBar />
-    //       <TopNavBar navigation={navigation} page={"My_UserProfile"}/>
-    //       <Bottomnavbar navigation={navigation} page={"My_UserProfile"}/>
-    //       <ScrollView>
-    //         <View style={styles.c1}>
-    //           <Image style={styles.profilePic} source={{ uri: data.profile_image }} />
-    //           <Text style={styles.txt}>@{data.username}</Text>
-
-    //           <View style={styles.c11}>
-    //             <View style={styles.c111}>
-    //               <Text style={styles.txt1}>Followers</Text>
-    //               <Text style={styles.txt2}>{data.followers}</Text>
-    //             </View>
-    //             <View style={styles.vr1}></View>
-
-    //             <View style={styles.c111}>
-    //               <Text style={styles.txt1}>Following</Text>
-    //               <Text style={styles.txt2}>{data.following}</Text>
-    //             </View>
-    //             <View style={styles.vr1}></View>
-
-    //             <View style={styles.c111}>
-    //               <Text style={styles.txt1}>Posts</Text>
-    //               <Text style={styles.txt2}>{data.posts.length}</Text>
-    //             </View>
-    //           </View>
-
-    //           <Text style={styles.desc}>{data.description}</Text>
-    //         </View>
-
-    //         <View style={styles.c1}>
-    //           <Text style={styles.txt}>Your Posts</Text>
-    //           <View style={styles.c13}>
-    //             {
-    //               data.posts.map((item) => {
-    //                 return(
-    //                   <View style={styles.postPic} key={item.id}>
-    //                     <Image source={{ uri: item.post_image }} style={styles.postPic} />
-    //                   </View>
-    //                 )
-    //               })
-    //             }
-    //           </View>
-    //         </View>
-    //       </ScrollView>
-    //     </View>
-    //   )
-    // }
 
 const styles = StyleSheet.create({
     container: {
@@ -274,7 +184,30 @@ const styles = StyleSheet.create({
       position:'absolute',
       top:60,
       right:25,
+    },
+    follow: {
+      color: 'white',
+      fontSize: 20,
+      fontWeight: 'bold',
+      margin: 10,
+      backgroundColor: '#0AD6A0',
+      paddingHorizontal:30,
+      paddingVertical:10,
+      borderRadius:20
+    },
+    message: {
+      color: 'white',
+      fontSize: 20,
+      fontWeight: 'bold',
+      margin: 10,
+      backgroundColor: 'gray',
+      paddingHorizontal:30,
+      paddingVertical:10,
+      borderRadius:20
+    },
+    row: {
+      flexDirection: 'row'
     }
   })
 
-export default My_UserProfile
+export default Other_UserProfile

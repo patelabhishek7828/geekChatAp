@@ -24,7 +24,7 @@ const Signup_ChooseUsername = ({ navigation, route }) => {
       alert("Please Enter Username")
     } else {
       setLoading(true);
-      fetch('http://192.168.1.107:3000/changeusername', {
+      fetch('http://192.168.1.106:3000/changeusername', {
         method: 'post',
         headers: {
           'Content-Type' : 'application/json',
@@ -33,7 +33,7 @@ const Signup_ChooseUsername = ({ navigation, route }) => {
           email: email,
           username: username
         })
-      }).then((res)=> res.json()).then((data)=>{
+      }).then((res)=> res.json()).then((data) => {
         console.log("data", data)
         if(data.message == 'username available'){
           setLoading(false);
