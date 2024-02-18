@@ -15,7 +15,7 @@ import UserCard from '../../Cards/UserCard'
 //   const getAllUsers = () => {
 //     if(keyword.length > 0){
 //       setLoading(true);
-//       fetch('http://192.168.1.106:3000/searchuser', {
+//       fetch('http://192.168.1.105:3000/searchuser', {
 //         method: 'post',
 //         headers: {
 //           'Content-Type': 'application/json'
@@ -154,7 +154,7 @@ const SearchuserPage = ({ navigation }) => {
   const getAllUsers = () => {
     if (keyword.length > 0) {
       setLoading(true);
-      fetch('http://192.168.1.106:3000/searchuser', {
+      fetch('http://192.168.1.105:3000/searchuser', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'

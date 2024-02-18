@@ -14,7 +14,7 @@ const Other_UserProfile = ({ navigation, route }) => {
   console.log("llll", user)
 
   const loadData =() => {
-    fetch('http://192.168.1.106:3000/differentuserdata', {
+    fetch('http://192.168.1.105:3000/differentuserdata', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -23,6 +23,8 @@ const Other_UserProfile = ({ navigation, route }) => {
     }).then(res => res.json()).then(data => {
       if(data.message == 'User Found'){
         setUserData(data.user)
+        isMyProfile(data.user);
+        checkFollow(data.user);
       }else {
         alert('User Not Found');
         navigation.navigate('SearchuserPage')
@@ -35,6 +37,48 @@ const Other_UserProfile = ({ navigation, route }) => {
   useEffect(() => {
     loadData();
   }, []);
+
+  // check self profile or other
+  const [isSameUser, setIsSameUser] = useState(false);
+  const isMyProfile = async(otherprofile) => {
+    AsyncStorage.getItem("user").then((loggedUserData)=>{
+      const loggedUserObj = JSON.parse(loggedUserData);
+      console.log("sshsh", loggedUserObj)
+      if(loggedUserObj.user.email == otherprofile.email){
+        setIsSameUser(true);
+        console.log("same user")
+      } else {
+        setIsSameUser(false);
+        console.log("other user")
+      }
+    })
+  }
+
+  // check already follow or not this user
+  const [isFollowing , setIsFollowing] = useState(false);
+  const checkFollow = (otheruser) => {
+    AsyncStorage.getItem('user').then(loggedUserData=>{
+      const loggedUserObj = JSON.parse(loggedUserData)
+      fetch('http://192.168.1.105:3000/checkFollow', {
+        method:'POST',
+        headers: {
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({followfrom: loggedUserObj.user.email, followto: otheruser.email})
+      })
+      .then(res => res.json()).then(data =>{
+        if(data.message == 'User in following list'){
+          setIsFollowing(true)
+        } else if(data.message == 'User not in following list'){
+          setIsFollowing(false)
+        } else {
+          alert('Something went wrong');
+        }
+      })
+    })
+  }
+  // follow this user
+  // unfollow this user
 
   return (
     <View style={styles.container}>
@@ -52,10 +96,12 @@ const Other_UserProfile = ({ navigation, route }) => {
             : <Image style={styles.profilePic} source={nopic} />
           }
           <Text style={styles.txt}>@{userData.username}</Text>
-          <View style={styles.row}>
-              <Text style={styles.follow}>Follow</Text>
+          {!isSameUser && <View style={styles.row}>
+              {
+                isFollowing ? <Text style={styles.follow}>Followed</Text> : <Text style={styles.follow}>Follow</Text>
+              }
               <Text style={styles.message}>Message</Text>
-          </View>
+          </View>}
           <View style={styles.c11}>
             <View style={styles.c111}>
               <Text style={styles.txt1}>Followers</Text>
@@ -82,7 +128,7 @@ const Other_UserProfile = ({ navigation, route }) => {
         {
           userData.posts.length > 0 ?
           <View style={styles.c1}>
-          <Text style={styles.txt}>Your Posts</Text>
+          <Text style={styles.txt}>Posts</Text>
           <View style={styles.c13}>
             {
               userData?.posts?.map((item) => {
