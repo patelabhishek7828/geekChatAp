@@ -11,7 +11,7 @@ const Other_UserProfile = ({ navigation, route }) => {
   
   const [userData, setUserData] = useState(null);
   const { user } = route.params
-  console.log("llll", user)
+  // console.log("llll", user)
 
   const loadData =() => {
     fetch('http://192.168.1.105:3000/differentuserdata', {
@@ -43,7 +43,7 @@ const Other_UserProfile = ({ navigation, route }) => {
   const isMyProfile = async(otherprofile) => {
     AsyncStorage.getItem("user").then((loggedUserData)=>{
       const loggedUserObj = JSON.parse(loggedUserData);
-      console.log("sshsh", loggedUserObj)
+      console.log("chk self profile or other", loggedUserObj)
       if(loggedUserObj.user.email == otherprofile.email){
         setIsSameUser(true);
         console.log("same user")
@@ -77,8 +77,53 @@ const Other_UserProfile = ({ navigation, route }) => {
       })
     })
   }
+
   // follow this user
+  const followThisUser = async(otheruser) => {
+    console.log("follow this", otheruser)
+    AsyncStorage.getItem('user').then(loggedUserData =>{
+      const loggedUserObj = JSON.parse(loggedUserData)
+      fetch('http:192.168.1.105:3000/followUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({followfrom: loggedUserObj.user.email, followto: otheruser.email})
+      })
+      .then(res =>res.json()).then(data=>{
+        console.log("hhhhhhhhhhhh", data)
+        if(data.message == 'User Followed'){
+          setIsFollowing(true);
+          loadData();
+        }else {
+          alert("Something went wrong")
+        }
+      })
+    })
+  }
+
   // unfollow this user
+  const unfollowThisUser = async(otheruser) => {
+    AsyncStorage.getItem('user').then(loggedUserData =>{
+      const loggedUserObj = JSON.parse(loggedUserData);
+      fetch('http:192.168.1.105:3000/unfollowUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({followfrom: loggedUserObj.user.email , followto: otheruser.email})
+      })
+      .then(res =>res.json()).then(data=>{
+        console.log("unfollow Done", data)
+        if(data.message == 'User unFollowed'){
+          setIsFollowing(false);
+          loadData();
+        }else {
+          alert("Something went wrong")
+        }
+      })
+    })
+  }
 
   return (
     <View style={styles.container}>
@@ -97,9 +142,10 @@ const Other_UserProfile = ({ navigation, route }) => {
           }
           <Text style={styles.txt}>@{userData.username}</Text>
           {!isSameUser && <View style={styles.row}>
-              {
+              {/* {
                 isFollowing ? <Text style={styles.follow}>Followed</Text> : <Text style={styles.follow}>Follow</Text>
-              }
+              } */}
+              {isFollowing? <Text style={styles.follow} onPress={() => unfollowThisUser(userData) }>unFollow</Text> : <Text style={styles.follow} onPress={() => followThisUser(userData) }>Follow</Text>}
               <Text style={styles.message}>Message</Text>
           </View>}
           <View style={styles.c11}>
@@ -125,25 +171,32 @@ const Other_UserProfile = ({ navigation, route }) => {
           }
         </View>
 
-        {
-          userData.posts.length > 0 ?
-          <View style={styles.c1}>
-          <Text style={styles.txt}>Posts</Text>
-          <View style={styles.c13}>
+        {isFollowing || isSameUser ? 
+          <View>
             {
-              userData?.posts?.map((item) => {
-                console.log("item", item)
-                return(
-                  <View style={styles.postPic} key={item.post}>
-                    <Image source={{ uri: item.post }} style={styles.postPic} />
-                  </View>
-                )
-              })
-            }
-          </View>
+              userData.posts.length > 0 ?
+              <View style={styles.c1}>
+              <Text style={styles.txt}>Posts</Text>
+              <View style={styles.c13}>
+                {
+                  userData?.posts?.map((item) => {
+                    console.log("item", item)
+                    return(
+                      <View style={styles.postPic} key={item.post}>
+                        <Image source={{ uri: item.post }} style={styles.postPic} />
+                      </View>
+                    )
+                  })
+                }
+              </View>
+            </View> :
+            <View style={styles.c2}>
+              <Text style={styles.txt1}>You have not posted anything yet.</Text>
+            </View>
+          }
         </View> :
         <View style={styles.c2}>
-          <Text style={styles.txt1}>You have not posted anything yet.</Text>
+          <Text style={styles.txt1}>Follow to see post.</Text>
         </View>
         }
       </ScrollView>
