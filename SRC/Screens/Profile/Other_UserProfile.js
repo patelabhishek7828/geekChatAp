@@ -142,11 +142,10 @@ const Other_UserProfile = ({ navigation, route }) => {
           }
           <Text style={styles.txt}>@{userData.username}</Text>
           {!isSameUser && <View style={styles.row}>
-              {/* {
-                isFollowing ? <Text style={styles.follow}>Followed</Text> : <Text style={styles.follow}>Follow</Text>
-              } */}
               {isFollowing? <Text style={styles.follow} onPress={() => unfollowThisUser(userData) }>unFollow</Text> : <Text style={styles.follow} onPress={() => followThisUser(userData) }>Follow</Text>}
-              <Text style={styles.message}>Message</Text>
+              <Text style={styles.message} onPress={() => navigation.navigate('MessagePage', {
+                fuserEmail: userData.email
+              })}>Message</Text>
           </View>}
           <View style={styles.c11}>
             <View style={styles.c111}>

@@ -25,6 +25,7 @@ import ChangeDescription from './SRC/Screens/Settings/ChangeDescription';
 import UploadProfilePicture from './SRC/Screens/Settings/UploadProfilePicture';
 import AddPost from './SRC/Screens/MainPage/AddPost';
 import Other_UserProfile from './SRC/Screens/Profile/Other_UserProfile';
+import MessagePage from './SRC/Screens/ChatSection/MessagePage';
 
 const Stack = createNativeStackNavigator();
 
@@ -68,6 +69,7 @@ export default function App() {
         
         <Stack.Screen name="Addpost" component={AddPost} options={{animation: 'slide_from_left'}}/>
         <Stack.Screen name="Other_UserProfile" component={Other_UserProfile} options={{animation: 'slide_from_left'}}/>
+        <Stack.Screen name="MessagePage" component={MessagePage} options={{animation: 'slide_from_left'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
