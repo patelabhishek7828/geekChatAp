@@ -29,7 +29,7 @@ const ForgotPassword_ChoosePassword = ({ navigation, route }) => {
       alert("Password doesn't match")
     }else {
       setLoading(true);
-      fetch('http://192.168.1.105:3000/resetPassword', {
+      fetch('http://192.168.1.2:3000/resetPassword', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'

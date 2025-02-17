@@ -14,7 +14,7 @@ const Other_UserProfile = ({ navigation, route }) => {
   // console.log("llll", user)
 
   const loadData =() => {
-    fetch('http://192.168.1.105:3000/differentuserdata', {
+    fetch('http://192.168.1.2:3000/differentuserdata', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -59,7 +59,7 @@ const Other_UserProfile = ({ navigation, route }) => {
   const checkFollow = (otheruser) => {
     AsyncStorage.getItem('user').then(loggedUserData=>{
       const loggedUserObj = JSON.parse(loggedUserData)
-      fetch('http://192.168.1.105:3000/checkFollow', {
+      fetch('http://192.168.1.2:3000/checkFollow', {
         method:'POST',
         headers: {
           'Content-Type':'application/json'

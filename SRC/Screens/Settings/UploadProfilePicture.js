@@ -54,7 +54,7 @@ import {
             setLoading(true);
             pickImage().then(url => {
                 if(url){
-                    fetch('http://192.168.1.105:3000/setprofilepic', {
+                    fetch('http://192.168.1.2:3000/setprofilepic', {
                         method: 'post',
                         headers: {
                             'Content-Type' : 'application/json',

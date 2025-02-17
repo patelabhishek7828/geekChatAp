@@ -22,7 +22,7 @@ const ForgotPassword_EnterEmail = ({ navigation }) => {
       alert("Please Enter Email")
     }else {
       setLoading(true);
-      fetch('http://192.168.1.105:3000/verifyForgotPassword', {
+      fetch('http://192.168.1.2:3000/verifyForgotPassword', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -28,7 +28,7 @@ import {
         if( post != null ){
             AsyncStorage.getItem('user').then(data => {
                 setLoading2(true);
-                fetch('http://192.168.1.105:3000/addpost', {
+                fetch('http://192.168.1.2:3000/addpost', {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json',

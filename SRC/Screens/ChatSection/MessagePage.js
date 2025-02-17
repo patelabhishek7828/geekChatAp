@@ -18,7 +18,7 @@ const MessagePage = ({navigation, route}) => {
     const loadData = async() => {
         AsyncStorage.getItem("user")
       .then(async(value) => {
-        fetch('http://192.168.1.105:3000/userdata', {
+        fetch('http://192.168.1.2:3000/userdata', {
           method: 'post',
           headers: {
             'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ const MessagePage = ({navigation, route}) => {
             setSelfUserData(data.user);
             
             //FRIEND USER 
-            fetch('http://192.168.1.105:3000/differentuserdata', {
+            fetch('http://192.168.1.2:3000/differentuserdata', {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json'
